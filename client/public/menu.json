@@ -1,0 +1,73 @@
+[
+    {
+      "id": 1,
+      "name": "Apple",
+      "category": "Fruits",
+      "image": "https://www.foodiesfeed.com/wp-content/uploads/2023/09/fresh-vegetables.jpg",
+      "price": 2.49
+    },
+    {
+      "id": 2,
+      "name": "Carrot",
+      "category": "Vegetables",
+      "image": "https://via.placeholder.com/150",
+      "price": 1.99
+    },
+    {
+      "id": 3,
+      "name": "Milk",
+      "category": "Dairy",
+      "image": "https://via.placeholder.com/150",
+      "price": 3.29
+    },
+    {
+      "id": 4,
+      "name": "Bone-Chicken",
+      "category": "Meat",
+      "image": "https://via.placeholder.com/150",
+      "price": 5.99
+    },
+    {
+      "id": 5,
+      "name": "Orange Juice",
+      "category": "Beverages",
+      "image": "https://via.placeholder.com/150",
+      "price": 2.79
+    },
+    {
+      "id": 6,
+      "name": "Potato Chips",
+      "category": "Snacks",
+      "image": "https://via.placeholder.com/150",
+      "price": 1.49
+    },
+    {
+      "id": 7,
+      "name": "Banana",
+      "category": "Fruits",
+      "image": "https://via.placeholder.com/150",
+      "price": 1.99
+    },
+    {
+      "id": 8,
+      "name": "Lettuce",
+      "category": "Vegetables",
+      "image": "https://via.placeholder.com/150",
+      "price": 1.79
+    },
+    {
+      "id": 9,
+      "name": "Yogurt",
+      "category": "Dairy",
+      "image": "https://via.placeholder.com/150",
+      "price": 2.99
+    },
+    {
+      "id": 10,
+      "name": "Chicken",
+      "category": "Meat",
+      "image": "https://via.placeholder.com/150",
+      "price": 8.49
+    }
+  ]
+  
