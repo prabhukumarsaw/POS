@@ -45,7 +45,7 @@ const Main = () => {
                 </svg>
               </Link>
               <Link
-                to="globalfragment"
+                to="inventory"
                 className="h-10 w-12 dark:bg-gray-700 dark:text-white rounded-md flex items-center justify-center hover:bg-sky-700"
               >
                 <svg
@@ -63,7 +63,7 @@ const Main = () => {
               </Link>
 
               <Link 
-              to='testpage'
+              to='customer'
               className="h-10 w-12 dark:text-gray-500 rounded-md flex items-center justify-center hover:bg-sky-700">
                 <svg
                   viewBox="0 0 24 24"

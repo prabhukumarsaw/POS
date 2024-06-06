@@ -1,7 +1,43 @@
 import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
+import {useNavigate} from "react-router-dom";
+import axios from 'axios';
+
 
 const Index = () => {
+  const navigate = useNavigate();
+
+  const [userData, setUserData] = useState({
+    name: '',
+    email: '',
+    mobile: '',
+    password: '',
+
+  });
+
+  const handleInputChange = (e) => {
+    const {name, value} = e.target;
+    setUserData({
+      ...userData,
+      [name]: value
+      
+    });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    axios
+        .post('http://localhost:5000/api/register', userData)
+        .then((result) => {
+          console.log(result);
+          alert("Registration Successfully");
+          navigate('/');
+        }).catch((error) => {
+          console.log(error);
+        });
+  }
+
+
   return (
     <div>
       <div className="min-h-screen bg-gray-100 text-gray-900 flex justify-center">
@@ -24,39 +60,62 @@ const Index = () => {
             </div> */}
             <div className="mt-12 flex flex-col items-center ">
               <h1 className="text-2xl xl:text-3xl font-extrabold">
-                Welcome to Point of Sale(POS)
+              Point of Sale(POS)
               </h1>
               <h1 className="text-xl xl:text-3xl font-extrabold text-blue-600">
-              Let's Get Started
+                Let's Get Started
               </h1>
               <div className="w-full flex-1 mt-8">
-                <div className="flex flex-col items-center gap-4">
-                <input
+                <form onSubmit={handleSubmit} className="flex flex-col items-center gap-4">
+                  <input
                     placeholder="Enter Name"
                     type="name"
+                    name="name"
+                    value={userData.name}
+                    onChange={handleInputChange}
+                    required
+                    className="w-full max-w-xs font-medium shadow-sm rounded-lg px-3 py-3 bg-indigo-100 text-gray-800 flex items-center justify-center transition-all duration-300 ease-in-out focus:outline-none hover:shadow focus:shadow-sm focus:shadow-outline"
+                  />
+                  <input
+                    placeholder="Enter Mobile Number"
+                    type="text"
+                    name="mobile"
+                    value={userData.mobile}
+                    onChange={handleInputChange}
+                    required
                     className="w-full max-w-xs font-medium shadow-sm rounded-lg px-3 py-3 bg-indigo-100 text-gray-800 flex items-center justify-center transition-all duration-300 ease-in-out focus:outline-none hover:shadow focus:shadow-sm focus:shadow-outline"
                   />
                   <input
                     placeholder="Enter Email"
                     type="email"
+                    name="email"
+                    value={userData.email}
+                    onChange={handleInputChange}
+                    required
                     className="w-full max-w-xs font-medium shadow-sm rounded-lg px-3 py-3 bg-indigo-100 text-gray-800 flex items-center justify-center transition-all duration-300 ease-in-out focus:outline-none hover:shadow focus:shadow-sm focus:shadow-outline"
                   />
 
                   <input
                     placeholder="Enter Password"
                     type="password"
+                    name="password"
+                    value={userData.password}
+                    onChange={handleInputChange}
+                    required
                     className="w-full max-w-xs font-medium shadow-sm rounded-lg px-3 py-3 bg-indigo-100 text-gray-800 flex items-center justify-center transition-all duration-300 ease-in-out focus:outline-none hover:shadow focus:shadow-sm focus:shadow-outline"
                   />
 
-                  <button className="bg-blue-500 text-white py-2 px-4 rounded-lg mt-4 w-80 ">
+                  <button type="submit" className="bg-blue-500 text-white py-2 px-4 rounded-lg mt-4 w-80 ">
                     Register
                   </button>
-                </div>
+                </form>
 
                 <div className="my-12 border-b text-center">
                   <div className="leading-none px-2 inline-block text-sm text-gray-600 tracking-wide font-medium bg-white transform translate-y-1/2">
-                  Already have an account?
- <Link to="/" className="text-blue-500">sign in</Link>
+                    Already have an account?
+                    <Link to="/" className="text-blue-500">
+                      sign in
+                    </Link>
                   </div>
                 </div>
 

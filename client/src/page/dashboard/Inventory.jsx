@@ -1,138 +1,166 @@
 import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { AuthContext } from "../../context/AuthProvider";
+import TableComponent from "../../components/TableComponent";
 
 const StatProfile = () => {
-  const { user,loading, error } = useContext(AuthContext);
+  const data = [
+    
+      {
+        ItemId: 1,
+        name: "Apple",
+        image: "https://example.com/apple.jpg",
+        quantity: 10,
+        price: 2.5,
+        brand: "Organic Farms",
+        category: "Grocery",
+      },
+      {
+        ItemId: 2,
+        name: "Bread",
+        image: "https://example.com/bread.jpg",
+        quantity: 15,
+        price: 3,
+        brand: "Baker's Delight",
+        category: "Grocery",
+      },
+      {
+        ItemId: 3,
+        name: "Toothpaste",
+        image: "https://example.com/toothpaste.jpg",
+        quantity: 20,
+        price: 2,
+        brand: "Colgate",
+        category: "Toiletries",
+      },
+      {
+        ItemId: 4,
+        name: "Rice",
+        image: "https://example.com/rice.jpg",
+        quantity: 12,
+        price: 10,
+        brand: "Royal Basmati",
+        category: "Grocery",
+      },
+      {
+        ItemId: 5,
+        name: "Milk",
+        image: "https://example.com/milk.jpg",
+        quantity: 8,
+        price: 3.5,
+        brand: "DairyPure",
+        category: "Grocery",
+      },
+      {
+        ItemId: 6,
+        name: "Soap",
+        image: "https://example.com/soap.jpg",
+        quantity: 18,
+        price: 1.5,
+        brand: "Dove",
+        category: "Toiletries",
+      },
+      {
+        ItemId: 7,
+        name: "Banana",
+        image: "https://example.com/banana.jpg",
+        quantity: 14,
+        price: 1.5,
+        brand: "Tropical Farms",
+        category: "Grocery",
+      },
+      {
+        ItemId: 8,
+        name: "Eggs",
+        image: "https://example.com/eggs.jpg",
+        quantity: 16,
+        price: 4,
+        brand: "Farm Fresh",
+        category: "Grocery",
+      },
+      {
+        ItemId: 9,
+        name: "Shampoo",
+        image: "https://example.com/shampoo.jpg",
+        quantity: 22,
+        price: 5,
+        brand: "Pantene",
+        category: "Toiletries",
+      },
+      {
+        ItemId: 10,
+        name: "Cereal",
+        image: "https://example.com/cereal.jpg",
+        quantity: 11,
+        price: 4.5,
+        brand: "Kellogg's",
+        category: "Grocery",
+      },
+      {
+        ItemId: 11,
+        name: "Chicken",
+        image: "https://example.com/chicken.jpg",
+        quantity: 9,
+        price: 8,
+        brand: "Free Range Farms",
+        category: "Grocery",
+      },
+      {
+        ItemId: 12,
+        name: "Yogurt",
+        image: "https://example.com/yogurt.jpg",
+        quantity: 17,
+        price: 2.5,
+        brand: "Chobani",
+        category: "Grocery",
+      },
+      {
+        ItemId: 13,
+        name: "Toilet Paper",
+        image: "https://example.com/toilet-paper.jpg",
+        quantity: 13,
+        price: 6,
+        brand: "Charmin",
+        category: "Toiletries",
+      },
+      {
+        ItemId: 14,
+        name: "Pasta",
+        image: "https://example.com/pasta.jpg",
+        quantity: 20,
+        price: 2.5,
+        brand: "Barilla",
+        category: "Grocery",
+      },
+      {
+        ItemId: 15,
+        name: "Orange Juice",
+        image: "https://example.com/orange-juice.jpg",
+        quantity: 15,
+        price: 3.5,
+        brand: "Tropicana",
+        category: "Grocery",
+      },
+    
+  ];
 
-  if (loading) {
-    return <p>Loading...</p>;
-  }
-
-  if (error) {
-    return <p>Error: {error}</p>;
-  }
-
-  if (!user) {
-    // User is not signed in
-    return <p>Please sign in to view your profile.</p>;
-  }
-  
-  const {additionalData} = user;
-  console.log("oooo",additionalData);
   return (
-    <> {additionalData && (
+    <>
       <div className="overflow-y-auto ">
         <div className="flex-grow dark:bg-gray-900 bg-cover bg-center  items-center justify-center  bg-gray-900">
-          <div className="grid grid-cols-1 md:grid-cols-3 ">
-            <div className="md:col-span-1 my-4 px-4   z-10">
-              {/* <!-- Left side content --> */}
-              <div className="flex flex-col ">
-                <div className="bg-gray-800 border border-gray-800 shadow-lg  rounded-2xl p-4">
-                  <div className="flex sm:flex">
-                    <div className=" relative h-32 w-32  sm:mb-0 mb-3">
-                      <img
-                        src={additionalData.imageUrl}
-                        alt="aji"
-                        className=" w-32 h-32 object-cover rounded-2xl"
-                      />
-                      <Link
-                        to="/editProfile"
-                        className="absolute -right-2 bottom-2   -ml-3  text-white p-1 text-xs bg-green-400 hover:bg-green-500 font-medium tracking-wider rounded-full transition ease-in duration-300"
-                      >
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          viewBox="0 0 20 20"
-                          fill="currentColor"
-                          className="h-4 w-4"
-                        >
-                          <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"></path>
-                        </svg>
-                      </Link>
-                    </div>
-                    <div className="flex-auto sm:ml-5 justify-evenly">
-                      <div className="flex items-center justify-between sm:mt-2">
-                        <div className="flex items-center">
-                          <div className="flex flex-col px-2">
-                            <div className="w-full flex-none text-lg text-gray-200 font-bold leading-none">
-                              {additionalData.name}, {additionalData.age}
-                            </div>
-                            <div className="flex-auto text-gray-400 my-2">
-                              <span className="mr-3 ">
-                                🧑‍🎓{additionalData.educationLevel}
-                              </span>
-                              <span className="mr-3 border-r border-gray-600  max-h-0"></span>
-                              <span>{additionalData.address}</span>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div className="flex pt-2  text-sm text-gray-400">
-                        <div className="flex-1 inline-flex items-center">
-                          <p className="px-2">✌️ {additionalData.gender}</p>
-                        </div>
-                      </div>
-                      <div className="flex pt-2  text-sm text-gray-400">
-                        <div className="flex-1 inline-flex items-center">
-                          <p className="px-2">✌️ {additionalData.email}</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="flex flex-col justify-center my-4 p-4 bg-gray-800 border-gray-800 shadow-md hover:shadow-lg rounded-2xl">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center">
-                    <div className="flex flex-col">
-                      <div className="text-md text-gray-100 font-medium leading-8 pb-2">
-                        INTERESTS
-                      </div>
-
-                      <div className="grid grid-cols-3 gap-3">
-                        {" "}
-                        {/* Adjust the number of columns based on your preference */}
-                        {additionalData.interests && additionalData.interests.length > 0 ? (
-                          additionalData.interests.map((interest, index) => (
-                            <span
-                              key={index}
-                              className="select-none rounded-lg border border-pink-500 py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-pink-500 transition-all hover:opacity-75 focus:ring focus:ring-pink-200 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
-                              data-ripple-dark="true"
-                            >
-                              {interest}
-                            </span>
-                          ))
-                        ) : (
-                          <span className="text-gray-500">
-                            No interests selected
-                          </span>
-                        )}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+          <div className="">
             <div className="md:col-span-2 my-4 px-4  ">
               {/* <!-- Right side content --> */}
               <div className="h-screen ">
                 <div className=" w-full mx-auto grid gap-4 grid-cols-1">
-                  <div className="flex flex-col justify-center p-4 bg-gray-800 border-gray-800 shadow-md hover:shodow-lg rounded-2xl">
-                    <div className="text-md text-gray-100 font-medium leading-8 mt-1">
-                      ABOUT ME
-                    </div>
-                    <div className=" text-gray-400 flex items-center ">
-                      <p>{additionalData.description} </p>
-                    </div>
-                  </div>
-
                   {/* <!---stats--> */}
-                  <div className="grid grid-cols-12 gap-4 ">
+                  <div className="text-xl px-3  font-bold text-gray-200 leading-8 ">
+                    PRODUCT ACTIVITY
+                  </div>
+                  <div className="grid grid-cols-8 gap-4 ">
                     <div className="col-span-12 sm:col-span-4">
                       <div className="p-4 relative  bg-gray-800 border border-gray-800 shadow-lg  rounded-2xl">
+                        <div className="text-md text-gray-200">Today Sales</div>
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           className="h-14 w-14  absolute bottom-4 right-3 text-red-500"
@@ -142,13 +170,13 @@ const StatProfile = () => {
                           <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
                         </svg>
                         <div className="text-2xl text-gray-100 font-medium leading-8 mt-5">
-                          20
+                          120
                         </div>
-                        <div className="text-sm text-gray-500">❤️Like</div>
                       </div>
                     </div>
                     <div className="col-span-12 sm:col-span-4">
                       <div className="p-4 relative  bg-gray-800 border border-gray-800 shadow-lg  rounded-2xl">
+                        <div className="text-md text-gray-200">Total Items</div>
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           className="h-14 w-14  absolute bottom-4 right-3 text-blue-500"
@@ -161,40 +189,70 @@ const StatProfile = () => {
                           <i className="fab fa-behance text-xl text-gray-400"></i>
                         </div>
                         <div className="text-2xl text-gray-100 font-medium leading-8 mt-5">
-                          99
-                        </div>
-                        <div className="text-sm text-gray-500">
-                          ⌛Focus Time
+                          799
                         </div>
                       </div>
                     </div>
                     <div className="col-span-12 sm:col-span-4">
                       <div className="p-4 relative  bg-gray-800 border border-gray-800 shadow-lg  rounded-2xl">
+                        <div className="text-md text-gray-200">
+                          Total Sales
+                        </div>
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           className="h-14 w-14  absolute bottom-4 right-3 text-blue-500"
                           viewBox="0 0 20 20"
                           fill="currentColor"
                         >
-                          <path d="M8 9a3 3 0 100-6 3 3 0 000 6zM8 11a6 6 0 016 6H2a6 6 0 016-6zM16 7a1 1 0 10-2 0v1h-1a1 1 0 100 2h1v1a1 1 0 102 0v-1h1a1 1 0 100-2h-1V7z"></path>
+                          <path d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5zM8 7a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7zM14 4a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z" />
                         </svg>
                         <div className="flex justify-between items-center ">
                           <i className="fab fa-codepen text-xl text-gray-400"></i>
                         </div>
                         <div className="text-2xl text-gray-100 font-medium leading-8 mt-5">
-                          50
+                          20
                         </div>
-                        <div className="text-sm text-gray-500">Friends</div>
+                      </div>
+                    </div>
+
+                    <div className="col-span-12 sm:col-span-4">
+                      <div className="p-4 relative  bg-gray-800 border border-gray-800 shadow-lg  rounded-2xl">
+                        <div className="text-md text-gray-200">
+                          Total Customer
+                        </div>
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          className="h-14 w-14  absolute bottom-4 right-3 text-blue-500"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                        >
+                          <path d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5zM8 7a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7zM14 4a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z" />
+                        </svg>
+                        <div className="flex justify-between items-center ">
+                          <i className="fab fa-codepen text-xl text-gray-400"></i>
+                        </div>
+                        <div className="text-2xl text-gray-100 font-medium leading-8 mt-5">
+                          80
+                        </div>
                       </div>
                     </div>
                   </div>
-                  <div className="grid gap-4 grid-cols-1 md:grid-cols-2">
-                    {/* <!--confirm modal--> */}
+
+                  <div className="text-xl px-3  font-bold text-gray-100 leading-8 ">
+                    PRODUCT STOCKS
+                  </div>
+
+                  <div className="flex flex-col justify-center p-4 bg-gray-800 border-gray-800 shadow-md hover:shodow-lg rounded-2xl">
+                    
+                    <div className="container mx-auto ">
+                      <TableComponent data={data} />
+                    </div>
+                  </div>
+ 
+                 {/* <div className="grid gap-4 grid-cols-1 md:grid-cols-2">
                     <div className="flex flex-col p-3  relative items-start justify-start bg-gray-800 border border-gray-800 shadow-lg  rounded-2xl">
                       <div className="flex flex-col w-full justify-center items-center overflow-y-displayScroll  gap-4">
-
-
-                     <div className="flex flex-col p-1 bg-white shadow-md hover:shodow-lg rounded-2xl">
+                        <div className="flex flex-col p-1 bg-white shadow-md hover:shodow-lg rounded-2xl">
                           <div className="flex items-center justify-between">
                             <div className="flex items-center">
                               <svg
@@ -258,12 +316,9 @@ const StatProfile = () => {
                             </button>
                           </div>
                         </div>
-                     
                       </div>
                     </div>
-                    {/* <!--elements--> */}
                     <div className="flex flex-col space-y-4">
-                      {/* <!-- elements 1 --> */}
 
                       <div className="text-md text-gray-100 font-medium leading-8 ">
                         Leaderboard (Current rank)
@@ -323,7 +378,6 @@ const StatProfile = () => {
                           </a>
                         </div>
                       </div>
-                      {/* <!--elements 2--> */}
                       <div className="flex flex-col p-4 bg-gray-800 border-gray-800 shadow-md hover:shodow-lg rounded-2xl cursor-pointer transition ease-in duration-500  transform hover:scale-105">
                         <div className="flex items-center justify-between">
                           <div className="flex items-center mr-auto">
@@ -372,7 +426,6 @@ const StatProfile = () => {
                           </div>
                         </div>
                       </div>
-                      {/* <!--elements 2--> */}
                       <div className="flex flex-col p-4 bg-gray-800 border-gray-800 shadow-md hover:shodow-lg rounded-2xl cursor-pointer transition ease-in duration-500  transform hover:scale-105">
                         <div className="flex items-center justify-between">
                           <div className="flex items-center mr-auto">
@@ -475,6 +528,10 @@ const StatProfile = () => {
                       </div>
                     </div>
                   </div>
+
+                  */}
+
+
                 </div>
               </div>
             </div>
@@ -483,7 +540,6 @@ const StatProfile = () => {
           <div className="container  m-4"></div>
         </div>
       </div>
-      )}
     </>
   );
 };

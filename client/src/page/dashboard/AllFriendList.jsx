@@ -16,13 +16,7 @@ const AllFriendList = () => {
           {/* Add your OrderCard components here */}
           <OrderCard/>
           <OrderCard/>
-          <OrderCard/>
-          <OrderCard/>
-          <OrderCard/>
-          <OrderCard/>
-          <OrderCard/>
-          <OrderCard/>
-          <OrderCard/>
+          
         </div>
         <div className="absolute bottom-0.5 w-60 mr-1">
           <TotalCart/>
