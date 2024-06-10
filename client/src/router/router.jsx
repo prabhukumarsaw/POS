@@ -7,7 +7,8 @@ import RegisterPage from '../page/Authentication/Register'
 
 
 import TestPage from "../page/dashboard/TestPage";
-import Customer from "../page/dashboard/Customer";
+import Customer from "../page/Customer/Customer";
+import History from "../page/History/History";
 
 const router = createBrowserRouter([
   {
@@ -37,8 +38,8 @@ const router = createBrowserRouter([
       },
       
       {
-        path: "testpage",
-        element: <TestPage />,
+        path: "history",
+        element: <History />,
       },
       
       

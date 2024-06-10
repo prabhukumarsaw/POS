@@ -13,14 +13,68 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
-
 model User {
-  id        Int      @id @default(autoincrement())
-  name      String?
-  email     String?  @unique
-  mobile    String?  @unique  
-  password  String?
+  id         Int      @id @default(autoincrement())
+  name       String?
+  email      String?  @unique
+  password   String?
   created_at DateTime @default(now())
 }
 
+model Product {
+  id           Int           @id @default(autoincrement())
+  name         String        @unique
+  brand        String?
+  quantity     Int?
+  category     Category?
+  image        String?
+  price        Float?
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  orderDetails OrderDetail[]
+}
+
+model Customer {
+  id        Int      @id @default(autoincrement())
+  name      String
+  phone     String   @unique
+  email     String   @unique
+  address   String?
+  company   String?
+  credit    Float    @default(0.0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  order     Order[]
+}
+
+model Order {
+  id           Int           @id @default(autoincrement())
+  customerId   Int
+  totalAmount  Int
+  status       OrderStatus
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  customer     Customer      @relation(fields: [customerId], references: [id])
+  orderDetails OrderDetail[]
+}
+
+model OrderDetail {
+  id        Int     @id @default(autoincrement())
+  orderId   Int
+  productId Int
+  quantity  Int
+  price     Float
+  order     Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  product   Product @relation(fields: [productId], references: [id])
+}
+
+enum Category {
+  FRUIT
+  VEGETABLE
+  DAIRY
+}
+
+enum OrderStatus {
+  paid
+  unpaid
+}

@@ -1,36 +1,79 @@
 import React, { useState } from "react";
+import ItemModal from '../components/AddItemModal';
+import ProductUpdateModel from '../components/ProductUpdateModel';
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
-const TableComponent = ({ data }) => {
+
+const TableComponent = ({ productData }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [rowsPerPage] = useState(10);
+  const [isOpen, setIsOpen] = useState(false);
+  const [isOpenUpdate, setIsOpenUpdate] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState(null); // State to hold the selected product for update
+  
+  
+
+  const handleOpenModal = () => {
+    setIsOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsOpen(false);
+  };
+
+  const handleOpenUpdateModal = (product) => { 
+    setSelectedProduct(product); // Set the selected product for update
+    setIsOpenUpdate(true);
+  };
+
+  const handleCloseUpadteModal = () => {
+    setIsOpenUpdate(false);
+  };
+
 
   const indexOfLastRow = currentPage * rowsPerPage;
   const indexOfFirstRow = indexOfLastRow - rowsPerPage;
-  const currentRows = data
+  const currentRows = productData
     .filter((item) =>
       item.name.toLowerCase().includes(searchTerm.toLowerCase())
     )
     .slice(indexOfFirstRow, indexOfLastRow);
 
   const totalPages = Math.ceil(
-    data.filter((item) =>
+    productData.filter((item) =>
       item.name.toLowerCase().includes(searchTerm.toLowerCase())
     ).length / rowsPerPage
   );
 
+  
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
 
-  const handleUpdate = (itemId) => {
-    // Handle update action
-    console.log("Update item with ID:", itemId);
-  };
 
-  const handleDelete = (itemId) => {
-    // Handle delete action
-    console.log("Delete item with ID:", itemId);
+  
+  const navigate = useNavigate();
+  const handleDelete = (id) => {
+    
+
+
+    setLoading(true);
+    axios
+      .delete(`http://localhost:5000/api/product/deleteProduct/${id}`)
+      .then(()=> {
+        setLoading(false);
+        alert("Deleted Successfully")
+        window.location.reload();
+      })
+      .catch ((error) => {
+        setLoading(false);
+        alert('Error')
+      });
+
+    console.log("Delete item with ID:", id);
   };
 
   return (
@@ -44,8 +87,8 @@ const TableComponent = ({ data }) => {
           className="px-4 py-2 text-black my-4 border rounded-md"
         />
         <button
-          onClick={() => setModalOpen(true)}
-          className="h-8 px-3 mx-2 rounded-md shadow text-white bg-blue-500"
+          onClick={handleOpenModal}
+          className="h-8 px-3 mx-2 rounded-md shadow text-white bg-green-500"
         >
           Add Item
         </button>
@@ -76,8 +119,8 @@ const TableComponent = ({ data }) => {
           {/* Table body */}
           <tbody>
             {currentRows.map((item) => (
-              <tr key={item.ItemId}>
-                <td>{item.ItemId}</td>
+              <tr key={item.id}>
+                <td>{item.id}</td>
                 <td>{item.name}</td>
                 <td>
                   <img src={item.image} alt={item.name} className="h-10 w-10" />
@@ -90,20 +133,16 @@ const TableComponent = ({ data }) => {
                 <td>
                   {/* Show action buttons only for the last stock entry */}
                   <>
+                   
                     <button
-                      onClick={() => handleUpdate(item.ItemId)}
+                      
+                      onClick={() => handleOpenUpdateModal(item)}
                       className="bg-green-500 hover:bg-green-700 text-white p-1  rounded mr-2"
                     >
-                      Entry
+                      Entry/Update
                     </button>
                     <button
-                      onClick={() => handleUpdate(item.ItemId)}
-                      className="bg-blue-500 hover:bg-blue-700 text-white p-1  rounded mr-2"
-                    >
-                      Update
-                    </button>
-                    <button
-                      onClick={() => handleDelete(item.ItemId)}
+                      onClick={() => handleDelete(item.id)}
                       className="bg-red-500 hover:bg-red-700 text-white  p-1  rounded"
                     >
                       Delete
@@ -115,6 +154,13 @@ const TableComponent = ({ data }) => {
           </tbody>
         </table>
       </div>
+
+      <ItemModal isOpen={isOpen} onClose={handleCloseModal} />
+
+      
+      <ProductUpdateModel isOpenUpdate={isOpenUpdate} onCloseUpdate={handleCloseUpadteModal} product={selectedProduct} />
+    
+      
       {/* Pagination */}
       <div className="flex justify-between mt-4">
         <button

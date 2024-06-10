@@ -10,7 +10,6 @@ const Index = () => {
   const [userData, setUserData] = useState({
     name: '',
     email: '',
-    mobile: '',
     password: '',
 
   });
@@ -72,15 +71,6 @@ const Index = () => {
                     type="name"
                     name="name"
                     value={userData.name}
-                    onChange={handleInputChange}
-                    required
-                    className="w-full max-w-xs font-medium shadow-sm rounded-lg px-3 py-3 bg-indigo-100 text-gray-800 flex items-center justify-center transition-all duration-300 ease-in-out focus:outline-none hover:shadow focus:shadow-sm focus:shadow-outline"
-                  />
-                  <input
-                    placeholder="Enter Mobile Number"
-                    type="text"
-                    name="mobile"
-                    value={userData.mobile}
                     onChange={handleInputChange}
                     required
                     className="w-full max-w-xs font-medium shadow-sm rounded-lg px-3 py-3 bg-indigo-100 text-gray-800 flex items-center justify-center transition-all duration-300 ease-in-out focus:outline-none hover:shadow focus:shadow-sm focus:shadow-outline"

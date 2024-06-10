@@ -81,7 +81,7 @@ const Main = () => {
                 </svg>
               </Link>
               <Link
-                to=""
+                to="history"
                 className="h-10 w-12 dark:text-gray-500 rounded-md flex items-center justify-center hover:bg-sky-700"
               >
                 <span className="relative flex-shrink-0">
