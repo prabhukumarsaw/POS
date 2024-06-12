@@ -3,22 +3,21 @@ import React, { createContext, useState, useEffect } from "react";
 const CartContext = createContext();
 
 const CartProvider = ({ children }) => {
-  // Load cart data from localStorage or initialize an empty array
   const [cart, setCart] = useState(() => {
     const savedCart = localStorage.getItem("cart");
     return savedCart ? JSON.parse(savedCart) : [];
   });
 
-  // Save cart data to localStorage whenever it changes
+  const [discount, setDiscount] = useState(0);
+
   useEffect(() => {
     localStorage.setItem("cart", JSON.stringify(cart));
   }, [cart]);
 
   const addToCart = (item) => {
     const itemIndex = cart.findIndex((cartItem) => cartItem.menuItemId === item.menuItemId);
-    
+
     if (itemIndex > -1) {
-      // Item already exists, increase the quantity
       const updatedCart = cart.map((cartItem, index) => {
         if (index === itemIndex) {
           const newQuantity = cartItem.quantity + 1;
@@ -28,7 +27,6 @@ const CartProvider = ({ children }) => {
       });
       setCart(updatedCart);
     } else {
-      // Item does not exist, add it to the cart with quantity 1
       setCart([...cart, { ...item, quantity: 1, total: item.price }]);
     }
   };
@@ -60,9 +58,31 @@ const CartProvider = ({ children }) => {
     setCart(updatedCart);
   };
 
+  const calculateTotals = () => {
+    const subTotal = cart.reduce((acc, item) => acc + item.total, 0);
+    const discountAmount = (subTotal * discount) / 100;
+    const total = subTotal - discountAmount + (subTotal * 0.1); // Assuming 10% tax
+
+    return {
+      subTotal,
+      discountAmount,
+      tax: subTotal * 0.1,
+      total
+    };
+  };
+
   return (
     <CartContext.Provider
-      value={{ cart, addToCart, removeFromCart, increaseQuantity, decreaseQuantity }}
+      value={{
+        cart,
+        addToCart,
+        removeFromCart,
+        increaseQuantity,
+        decreaseQuantity,
+        discount,
+        setDiscount,
+        calculateTotals
+      }}
     >
       {children}
     </CartContext.Provider>
