@@ -7,6 +7,7 @@ const Home = () => {
   const [menu, setMenu] = useState([]);
   const [filteredItem, setFilteredItem] = useState([]);
   const [selectCategory, setSelectCategory] = useState("all");
+  
   //pagination
 
   useEffect(() => {

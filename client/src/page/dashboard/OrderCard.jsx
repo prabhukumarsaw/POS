@@ -1,37 +1,48 @@
-import React from "react";
+import React, { useContext } from "react";
+import { CartContext } from "../../context/CartContext";
 
-const OrderCard = () => {
+const OrderCard = ({ item }) => {
+  const { removeFromCart, increaseQuantity, decreaseQuantity } = useContext(CartContext);
+
+  const { menuItemId, image, name, price, quantity } = item;
+
+  const truncatedName = name.slice(0, 12) + (name.length > 10 ? "..." : "");
+
   return (
-    <figcaption className="flex items-center space-x-2 gap-1 p-2 m-2 ">
-      <img
-        src="https://www.foodiesfeed.com/wp-content/uploads/2023/09/fresh-vegetables.jpg"
-        alt=""
-        className="flex-none w-14 h-14 rounded-full object-cover"
-        loading="lazy"
-        decoding="async"
-      />
-      <div className="flex-auto">
-        <div className="mt-0.5 dark:text-slate-300">
-          Pouring honey on pancakes
+    <div className="max-w-2xl h-20 bg-gray-800 px-1 mx-4 sm:max-w-sm md:max-w-sm lg:max-w-sm xl:max-w-sm sm:mx-auto md:mx-auto lg:mx-auto xl:mx-auto mt-4 shadow-xl rounded-lg text-white group overflow-hidden relative">
+      <button
+        onClick={() => removeFromCart(menuItemId)}
+        className="absolute top-2 right-2 text-gray-300 hover:text-white"
+      >
+        ❌
+      </button>
+      <div className="flex justify-between py-4">
+        <div className="flex">
+          <img
+            src={image}
+            alt={name}
+            className="flex-none w-14 h-14 rounded-full object-cover"
+            loading="lazy"
+            decoding="async"
+          />
+          <div className="ml-1">
+            <p className="text-gray-300 text-xs">{truncatedName}</p>
+            <p className="rounded-lg text-sky-500 font-bold py-2 text-xs w-fit h-fit">
+              ₹ {price * quantity}
+            </p>
+          </div>
         </div>
-        <span className="text-blue-500"> RS 99</span>
+        <div className="flex items-center mt-5 mx-2">
+          <button onClick={() => decreaseQuantity(menuItemId)} className="px-0 mr-2">
+            ➖
+          </button>
+          <span className="text-center w-2">{quantity}</span>
+          <button onClick={() => increaseQuantity(menuItemId)} className="px-0 ml-2">
+            ➕
+          </button>
+        </div>
       </div>
-      <div className="flex-auto">
-      <button
-        className="h-8 px-3 p-2 space-x-4 rounded-md shadow text-white bg-blue-500"
-      >
-        -
-      </button>
-      <div className="flex-auto  text-center">
-        <span className="text-green-500">5</span>
-      </div>
-      <button
-        className="h-8 px-3 p-2 rounded-md shadow text-white bg-blue-500"
-      >
-        +
-      </button>
-      </div>
-    </figcaption>
+    </div>
   );
 };
 
