@@ -46,6 +46,7 @@ const CartProvider = ({ children }) => {
     });
     setCart(updatedCart);
   };
+  
 
   const decreaseQuantity = (itemId) => {
     const updatedCart = cart.map((item) => {
@@ -61,7 +62,7 @@ const CartProvider = ({ children }) => {
   const calculateTotals = () => {
     const subTotal = cart.reduce((acc, item) => acc + item.total, 0);
     const discountAmount = (subTotal * discount) / 100;
-    const total = subTotal - discountAmount + (subTotal * 0.1); // Assuming 10% tax
+    const total = subTotal - discountAmount + (subTotal * 0.0); // Assuming 10% tax
 
     return {
       subTotal,

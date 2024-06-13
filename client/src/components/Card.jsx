@@ -3,9 +3,8 @@ import { Link } from "react-router-dom";
 import { CartContext } from "../context/CartContext";
 
 const Card = ({ item }) => {
-
   const { addToCart } = useContext(CartContext);
-  const { id, name, brand, category, image, price } = item;
+  const { id, name, brand, category, quantity,  image, price } = item;
 
   const handleAddtoCart = () => {
     const cartItem = { menuItemId: id, name, quantity: 1, image, price };
@@ -16,35 +15,32 @@ const Card = ({ item }) => {
     <button onClick={() => handleAddtoCart(item)}>
       <div
         key={item.id}
-        className="max-w-2xl mx-4 sm:max-w-sm md:max-w-sm lg:max-w-sm xl:max-w-sm sm:mx-auto md:mx-auto lg:mx-auto xl:mx-auto mt-4 shadow-xl rounded-lg text-white-900"
-        style={{ background: "#353D48" }}
+        className="card h-52 shadow-xl rounded-lg bg-white border border-gray-400"
       >
-        <div className="relative rounded-t-lg h-32 overflow-hidden">
-          <img
-            className="object-cover object-top w-full"
-            src={item.image}
-            alt="Mountain"
-          />
-          <div className="absolute top-0 right-0 p-2">
-            <h1 className="ml-auto text-xs py-1 px-2 leading-none dark:bg-gray-900 bg-green-500 text-grey-300 rounded-md">
-              <span class="text-xl text-blue-500">1</span>
-            </h1>
-          </div>
+        <div className="relative rounded-t-lg  overflow-hidden">
+          <figure>
+            <img
+              className="object-cover object-top w-full"
+              src={item.image}
+              alt="Mountain"
+            />
+          </figure>
+          {/* <div className="absolute  top-0 right-0 p-1">
+          <button className="indicator-item   text-black">
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" /></svg>
+ 
+          </button>
+          </div> */}
         </div>
 
-        <div className="p-3 flex items-center justify-between ">
-          <div className="flex items-center">
-            <div className="ml-2 flex flex-col">
-              <div className="leading-snug text-sm text-white font-bold">
-                {item.name}
-              </div>
-              <div className="leading-snug text-xs text-gray-400 pr-1">
-                {item.brand}
-              </div>
-            </div>
-          </div>
-          <div className="h-8 px-3 text-md font-bold border-blue-400 rounded-md">
-            <span>₹</span> {item.price}
+        <div className=" text-left py-1 px-2">
+          <p className="leading-snug text-xs text-gray-800 font-semibold">
+            {item.name}
+          </p>
+
+          <div className="flex justify-between py-1">
+            <p className="text-gray-600 text-xs">{brand}</p>
+            <p className="text-black font-bold text-sm">₹ {price}</p>
           </div>
         </div>
       </div>

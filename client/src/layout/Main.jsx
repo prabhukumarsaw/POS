@@ -1,16 +1,23 @@
 import React, { useContext, useState } from "react";
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import CreateRoom from "../page/dashboard/Checkout";
+import DateTime from "../components/DateTime";
+import Home from "../page/dashboard/Home";
 
 const Main = () => {
   const [isModalOpen, setModalOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
 
+  const handleSearch = (event) => {
+    setSearchQuery(event.target.value);
+  };
 
 
   return (
     <div>
-        <div className=" dark:bg-gray-900 dark:text-white text-gray-600 h-screen flex overflow-hidden text-sm">
-          <div className="bg-slate-900 dark:bg-gray-900 dark:border-gray-800 w-20 flex-shrink-0 border-r border-gray-200 flex-col hidden sm:flex">
+      
+        <div className=" h-screen flex overflow-hidden text-sm">
+          <div className=" w-20 flex-shrink-0 border-r  flex-col hidden sm:flex">
             <div className="h-16 text-blue-500 flex items-center justify-center">
               <svg
                 className="w-9"
@@ -26,7 +33,7 @@ const Main = () => {
                 />
               </svg>
             </div>
-            <div className="flex mx-auto flex-grow mt-4 flex-col text-gray-400 space-y-4">
+            <div className="flex mx-auto flex-grow mt-4 flex-col  space-y-4">
               <Link
                 to=""
                 className="h-10 w-12 dark:text-gray-500 rounded-md flex items-center justify-center bg-blue-100 text-blue-500"
@@ -95,33 +102,43 @@ const Main = () => {
               </Link>
             </div>
           </div>
-          <div className="flex-grow overflow-hidden h-full flex flex-col  bg-gray-900 dark:bg-gray-900">
-          
-               
-            <div className="h-16 lg:flex w-full border-b border-gray-200 dark:border-gray-800 hidden  px-10">
-            <h1 class=" text-3xl  font-bold text-white">Premium <span className="text-green-500">POS,</span> </h1>
-              <div className="ml-auto flex items-center space-x-7">
-              <button
-                  onClick={() => setModalOpen(true)}
-                  className="h-8 px-3 rounded-md shadow text-white bg-blue-500"
-                >
-                  + 
-                </button>
-                <CreateRoom
-                  isModalOpen={isModalOpen}
-                  setModalOpen={setModalOpen}
-                />
-                <button
-                  className="h-8 px-3 rounded-md shadow text-white bg-red-500"
-                >
-                  {" "}
-                 
-                  Leave
-                </button>
-              </div>
-            </div>
-            <Outlet />
-          </div>
+          <div className="flex-grow overflow-hidden h-full flex flex-col">
+  <div className="h-16 flex w-full border-b px-10 items-center">
+    <div className="flex flex-col mx-2">
+      <h1 className="text-3xl font-bold">
+        Premium <span className="text-green-500">POS</span>
+      </h1>
+      <DateTime />
+    </div>
+    <div className="ml-14 flex ">
+    <div className="form-control w-60">
+    <input
+                type="text"
+                value={searchQuery}
+                onChange={handleSearch}
+                placeholder="Search for Rice, Oil, etc."
+                className="input input-bordered md:w-auto"
+              />
+    </div>
+    </div>
+    <div className="ml-auto flex items-center space-x-7">
+      
+      <button
+        onClick={() => setModalOpen(true)}
+        className="h-8 px-3 rounded-md shadow text-white bg-blue-500"
+      >
+        +
+      </button>
+      <CreateRoom isModalOpen={isModalOpen} setModalOpen={setModalOpen} />
+      <button className="h-8 px-3 rounded-md shadow text-white bg-red-500">
+        Leave
+      </button>
+    </div>
+  </div>
+  
+  <Outlet context={{ searchQuery }} />
+</div>
+
         </div>
     </div>
   );

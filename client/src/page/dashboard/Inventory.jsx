@@ -22,7 +22,7 @@ const StatProfile = () => {
   return (
     <>
       <div className="overflow-y-auto ">
-        <div className="flex-grow dark:bg-gray-900 bg-cover bg-center  items-center justify-center  bg-gray-900">
+        <div className="flex-grow  bg-cover bg-center  items-center justify-center  ">
           <div className="">
             <div className="md:col-span-2 my-4 px-4  ">
               {/* <!-- Right side content --> */}
@@ -117,7 +117,7 @@ const StatProfile = () => {
                     PRODUCT STOCKS
                   </div>
 
-                  <div className="flex flex-col justify-center p-4 bg-gray-800 border-gray-800 shadow-md hover:shodow-lg rounded-2xl">
+                  <div className="flex flex-col justify-center p-4  border-gray-800 shadow-md hover:shodow-lg rounded-2xl">
                     
                     <div className="container mx-auto ">
                       <TableComponent productData={productData} />

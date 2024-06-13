@@ -3,14 +3,14 @@ import OrderCard from "./OrderCard";
 import TotalCart from "./TotalCart";
 import { CartContext } from "../../context/CartContext";
 
-const AllFriendList = () => {
+const CartComponent = () => {
   const { cart } = useContext(CartContext);
 
   return (
     <>
       <div className="xl:w-72 w-48 flex-shrink-0 border-r border-gray-200 dark:border-gray-800 h-3/5 overflow-y-auto lg:block hidden p-5">
         <div className="text-xs text-gray-400 tracking-wider">
-          <h2 className="text-xl font-bold text-white ">
+          <h2 className="text-xl font-bold text-gray-800 ">
             Orders <span className="text-blue-500">#1,</span>{" "}
           </h2>
         </div>
@@ -30,4 +30,4 @@ const AllFriendList = () => {
   );
 };
 
-export default AllFriendList;
+export default CartComponent;

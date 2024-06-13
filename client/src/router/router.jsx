@@ -1,12 +1,10 @@
+// src/routes/index.js (or wherever you define your router)
 import { createBrowserRouter } from "react-router-dom";
 import Main from "../layout/Main";
 import Home from "../page/dashboard/Home";
 import Inventory from "../page/dashboard/Inventory";
-import AuthFragment from '../page/Authentication/SignIn'
-import RegisterPage from '../page/Authentication/Register'
-
-
-import TestPage from "../page/dashboard/TestPage";
+import AuthFragment from '../page/Authentication/SignIn';
+import RegisterPage from '../page/Authentication/Register';
 import Customer from "../page/Customer/Customer";
 import History from "../page/History/History";
 
@@ -19,7 +17,6 @@ const router = createBrowserRouter([
     path: "register",
     element: <RegisterPage />,
   },
- 
   {
     path: "main",
     element: <Main />,
@@ -36,17 +33,12 @@ const router = createBrowserRouter([
         path: "customer",
         element: <Customer />,
       },
-      
       {
         path: "history",
         element: <History />,
       },
-      
-      
     ],
   },
-  
-
 ]);
 
 export default router;
