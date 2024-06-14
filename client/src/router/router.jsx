@@ -7,6 +7,7 @@ import AuthFragment from '../page/Authentication/SignIn';
 import RegisterPage from '../page/Authentication/Register';
 import Customer from "../page/Customer/Customer";
 import History from "../page/History/History";
+import CustomerDetail from "../page/Customer/CustomerDetail";
 
 const router = createBrowserRouter([
   {
@@ -32,6 +33,10 @@ const router = createBrowserRouter([
       {
         path: "customer",
         element: <Customer />,
+      },
+      {
+        path: "/main/customer/customerdetail/:id",
+        element: <CustomerDetail />,
       },
       {
         path: "history",
