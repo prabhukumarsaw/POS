@@ -8,40 +8,48 @@ const home = async (req, res) => {
     }
   };
 
-const addCustomer = async (req, res) => {
-   
-    try {
-        const {name, phone, email, address, company} = req.body;
+  const addCustomer = async (req, res) => {
+    const { phone, totalAmount } = req.body;
 
-        const isExist = await prisma.customer.findUnique({
-            where: {
-                phone: phone
-            }
-        })
-    
-        if(isExist){
-            return res.status(400).json("Phone number already Exist!")
-        }
+  try {
+    // Find the customer by phone number
+    let customer = await prisma.customer.findUnique({
+      where: { phone },
+    });
 
-        const customer = await prisma.customer.create({
-            data: {
-                name: name,
-                phone: phone,
-                email: email,
-                address: address,
-                company: company,
-            }
-        });
-    
-        console.log("Customer Created: ", customer);
-        return res.status(200).json({msg: "Customer Created:", customer})
-
-    } catch (error) {
-        console.error("Error Customer: ", error);
-        return res.status(500).json({ error: "Server error" });
+    // If the customer does not exist, create a new one
+    if (!customer) {
+      customer = await prisma.customer.create({
+        data: {
+          phone,
+          credit: totalAmount, // Set initial credit to the total amount
+        },
+      });
+    } else {
+      // Update the customer's credit
+      customer = await prisma.customer.update({
+        where: { phone },
+        data: {
+          credit: customer.credit + totalAmount, // Add the total amount to the existing credit
+        },
+      });
     }
-   
-}
+
+    // Create a new order for the customer
+    const order = await prisma.order.create({
+      data: {
+        customerId: customer.id,
+        totalAmount: parseFloat(totalAmount),
+        status: "unpaid", // Set status based on your business logic
+      },
+    });
+
+    res.json({ customer, order });
+  } catch (error) {
+    console.error("Error Customer: ", error);
+    return res.status(500).json({ error: "Server error" });
+  }
+};
 
 const viewAllCustomer = async (req, res) => {
   try {

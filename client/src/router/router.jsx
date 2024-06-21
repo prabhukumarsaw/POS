@@ -2,6 +2,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import Main from "../layout/Main";
 import Home from "../page/dashboard/Home";
+import Pos from "../page/dashboard/Home";
 import Inventory from "../page/dashboard/Inventory";
 import AuthFragment from '../page/Authentication/SignIn';
 import RegisterPage from '../page/Authentication/Register';
@@ -25,6 +26,10 @@ const router = createBrowserRouter([
       {
         path: "",
         element: <Home />,
+      },
+      {
+        path: "pos",
+        element: <Pos />,
       },
       {
         path: "inventory",

@@ -29,7 +29,7 @@ const StatProfile = () => {
               <div className="h-screen ">
                 <div className=" w-full mx-auto grid gap-4 grid-cols-1">
                   {/* <!---stats--> */}
-                  <div className="text-xl px-3  font-bold text-gray-200 leading-8 ">
+                  <div className="text-xl px-3  font-bold text-gray-900 leading-8 ">
                     PRODUCT ACTIVITY
                   </div>
                   <div className="grid grid-cols-8 gap-4 ">
@@ -113,7 +113,7 @@ const StatProfile = () => {
                     </div>
                   </div>
 
-                  <div className="text-xl px-3  font-bold text-gray-100 leading-8 ">
+                  <div className="text-xl px-3  font-bold text-gray-900 leading-8 ">
                     PRODUCT STOCKS
                   </div>
 

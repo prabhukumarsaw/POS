@@ -33,9 +33,9 @@ CREATE TABLE "Product" (
 -- CreateTable
 CREATE TABLE "Customer" (
     "id" SERIAL NOT NULL,
-    "name" TEXT NOT NULL,
+    "name" TEXT,
     "phone" TEXT NOT NULL,
-    "email" TEXT NOT NULL,
+    "email" TEXT,
     "address" TEXT,
     "company" TEXT,
     "credit" DOUBLE PRECISION NOT NULL DEFAULT 0.0,

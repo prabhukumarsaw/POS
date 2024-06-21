@@ -22,14 +22,14 @@ const TotalCart = () => {
           <span>Discount</span>
           <input
             type="number"
-            value={discount}
+            value={discount}  //add discount
             onChange={(e) => setDiscount(Number(e.target.value))}
             className="text-gray-800 w-24 border-2 border-neutral-600 px-2 py-1 rounded-lg"
           />
         </li>
         <li className="flex justify-between items-center py-1">
           <span>Tax (10%)</span>
-          <span className="text-black">₹ {totals.tax.toFixed(2)}</span>
+          <span className="text-black">₹ {" "} -{totals.tax.toFixed(2)}</span>
         </li>
         <li className="flex justify-between items-center py-1">
           <span>Total</span>
