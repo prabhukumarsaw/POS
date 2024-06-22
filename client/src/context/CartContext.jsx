@@ -2,12 +2,17 @@ import React, { createContext, useState, useEffect } from "react";
 
 const CartContext = createContext();
 
+const generateShortUUID = (length = 5) => {
+  return Math.random().toString(36).substring(2, 2 + length);
+};
+
 const CartProvider = ({ children }) => {
   const [cart, setCart] = useState(() => {
     const savedCart = localStorage.getItem("cart");
     return savedCart ? JSON.parse(savedCart) : [];
   });
 
+  const [orderId, setOrderId] = useState(generateShortUUID()); // Generate initial short ID
   const [discount, setDiscount] = useState(0);
 
   useEffect(() => {
@@ -46,7 +51,6 @@ const CartProvider = ({ children }) => {
     });
     setCart(updatedCart);
   };
-  
 
   const decreaseQuantity = (itemId) => {
     const updatedCart = cart.map((item) => {
@@ -57,6 +61,11 @@ const CartProvider = ({ children }) => {
       return item;
     });
     setCart(updatedCart);
+  };
+
+  const clearCart = () => {
+    setCart([]);
+    setOrderId(generateShortUUID()); // Generate a new short ID for the next order
   };
 
   const calculateTotals = () => {
@@ -80,9 +89,11 @@ const CartProvider = ({ children }) => {
         removeFromCart,
         increaseQuantity,
         decreaseQuantity,
+        clearCart,
         discount,
         setDiscount,
-        calculateTotals
+        calculateTotals,
+        orderId
       }}
     >
       {children}

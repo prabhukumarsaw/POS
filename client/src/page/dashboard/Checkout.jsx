@@ -5,7 +5,6 @@ import axios from "axios";
 import { toast } from 'react-toastify';
 import { useNavigate } from "react-router-dom";
 
-// Make sure to set appElement to satisfy accessibility requirements
 Modal.setAppElement("#root");
 
 const roomStyles = {
@@ -17,10 +16,10 @@ const roomStyles = {
     marginRight: "-50%",
     transform: "translate(-50%, -50%)",
     border: "none",
-    width: "58%", // Adjust this width as needed
-    maxWidth: "80%", // Set a maximum width
-    backgroundColor: "#ffffff", // Semi-transparent background
-    backdropFilter: "blur(10px)", // Glass effect
+    width: "58%",
+    maxWidth: "80%",
+    backgroundColor: "#ffffff",
+    backdropFilter: "blur(10px)",
     boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
     borderRadius: "12px",
   },
@@ -30,7 +29,7 @@ const roomStyles = {
 };
 
 const CheckoutBill = ({ isModalOpen, setModalOpen }) => {
-  const { cart, calculateTotals } = useContext(CartContext);
+  const { cart, clearCart, calculateTotals } = useContext(CartContext);
   const [totals, setTotals] = useState({});
   const [phone, setPhone] = useState('');
 
@@ -43,14 +42,23 @@ const CheckoutBill = ({ isModalOpen, setModalOpen }) => {
         return;
       }
 
+      const orderDetails = cart.map(item => ({
+        productId: item.menuItemId,
+        quantity: item.quantity,
+        price: item.price,
+      }));
+
       const response = await axios.post("http://localhost:5000/api/customer/addCustomer", {
         phone,
         totalAmount: parseFloat(totals.total),
+        paymentMethod,
+        orderDetails,
       });
 
       let message = 'Order placed successfully!';
-    
+
       toast.success(message, { position: "top-center", autoClose: 1000 });
+      clearCart();
       console.log("Checkout Response:", response.data);
       setModalOpen(false);
     } catch (error) {
@@ -73,7 +81,6 @@ const CheckoutBill = ({ isModalOpen, setModalOpen }) => {
       style={roomStyles}
     >
       <div className="grid grid-cols-12 m-1">
-        {/* summary */}
         <div className="col-span-7">
           <div className="">
             <div className="mb-4">
@@ -102,7 +109,6 @@ const CheckoutBill = ({ isModalOpen, setModalOpen }) => {
           </div>
         </div>
 
-        {/* bill */}
         <div className="col-span-5">
           <div className="p-2">
             <div className="flex justify-center">
@@ -145,14 +151,14 @@ const CheckoutBill = ({ isModalOpen, setModalOpen }) => {
                   <button
                     type="button"
                     className="btn btn-sm btn-success text-white py-2 px-4 rounded"
-                    
+                    onClick={() => handleCreditCheckout('cash')}
                   >
                     Cash
                   </button>
                   <button
                     type="button"
                     className="btn btn-sm btn-info text-white py-2 px-4 rounded"
-                    // onClick={() => handleCheckout('card')}
+                    onClick={() => handleCreditCheckout('card')}
                   >
                     Card
                   </button>

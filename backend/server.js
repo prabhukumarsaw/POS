@@ -4,6 +4,7 @@ import cors from 'cors'
 import UserRouter from './Routes/UserRouter.js';
 import ProductRouter from './Routes/ProductRouter.js';
 import CustomerRouter from './Routes/CustomerRouter.js'
+import OrderRouter from './Routes/OrderRouter.js';
 
 const PORT = process.env.PORT || 5000;
 
@@ -19,7 +20,7 @@ app.get('/', (req, res) => {
 app.use('/api/', UserRouter);
 app.use('/api/product/', ProductRouter);
 app.use('/api/customer/', CustomerRouter);
-
+app.use('/api', OrderRouter);
 
 app.listen(PORT, ()=>{
     console.log(`Server is running at PORT ${PORT}`)

@@ -1,10 +1,12 @@
+## Invoice Receipt code 
+
 import React, { useContext, useEffect, useState } from "react";
-import { CartContext } from "../../context/CartContext";
+import { CartContext } from "../context/CartContext";
 
 
 
 
-const InvoiceReceipt = () => {
+const InvoiceReceipt = ({order}) => {
   const { cart, calculateTotals } = useContext(CartContext);
   const [totals, setTotals] = useState({});
   
@@ -93,3 +95,4 @@ const InvoiceReceipt = () => {
 };
 
 export default InvoiceReceipt;
+
