@@ -1,5 +1,3 @@
-// orderController.js
-
 import prisma from "../Database/db.config.js";
 
 // Fetch all orders
@@ -8,7 +6,11 @@ const getAllOrders = async (req, res) => {
     const orders = await prisma.order.findMany({
       include: {
         customer: true,
-        orderDetails: true,
+        orderDetails: {
+          include: {
+            product: true, // Include product details
+          },
+        },
       },
     });
     res.json(orders);
@@ -28,7 +30,11 @@ const getOrderById = async (req, res) => {
       },
       include: {
         customer: true,
-        orderDetails: true,
+        orderDetails: {
+          include: {
+            product: true, // Include product details
+          },
+        },
       },
     });
     if (!order) {
@@ -62,7 +68,11 @@ const createOrder = async (req, res) => {
       },
       include: {
         customer: true,
-        orderDetails: true,
+        orderDetails: {
+          include: {
+            product: true, // Include product details
+          },
+        },
       },
     });
     res.status(201).json(newOrder);

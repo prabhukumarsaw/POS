@@ -4,6 +4,8 @@ const InvoiceReceipt = ({ customer, receipt }) => {
   const { createdAt, customerId, id, orderDetails, totalAmount } = receipt;
   const { name, email, phone, address } = customer;
 
+  
+
   return (
     <dialog id="my_modal_3" className="modal" contentLabel="Checkout Modal">
       <div className="modal-box">

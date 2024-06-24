@@ -1,3 +1,16 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Add this to your main CSS file */
+
+@media print {
+
+
+  .receipt-content {
+    visibility: visible; /* Show receipt content */
+    position: relative; /* Ensure receipt content is positioned correctly */
+    top: 0;
+    left: 0;
+  }
+}

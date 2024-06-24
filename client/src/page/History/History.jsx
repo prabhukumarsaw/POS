@@ -1,13 +1,14 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
-import InvoiceReceipt from "../../components/InvoiceReceipt";
+import React, { useEffect, useRef, useState } from "react";
+import { useReactToPrint } from 'react-to-print';
 import TransactionHistoryReceipt from "../../components/TransactionHistoryReceipt";
 
 const Table = () => {
   const [orders, setOrders] = useState([]);
   const [selectedInvoice, setSelectedInvoice] = useState(null);
   
-  console.log("his", orders);
+  const componentRef = useRef();
+
 
   useEffect(() => {
     axios
@@ -31,6 +32,11 @@ const Table = () => {
     document.getElementById("my_modal_3").showModal();
   };
 
+  const handlePrint = useReactToPrint({
+    content: () => componentRef.current,
+  });
+  console.log("history", orders);
+
   return (
     <>
       <div className="overflow-y-auto">
@@ -39,7 +45,7 @@ const Table = () => {
             <div className="mt-4">
               <h1 className="text-2xl text-gray-600 font-bold">Transactions History</h1>
             </div>
-            <StatData totalBalance={totalBalance} />
+            <StatData totalBalance={totalBalance} orders={orders} />
             <div className="shadow-md">
               <div className="flex justify-between mx-4 mt-3">
                 <div>
@@ -68,6 +74,7 @@ const Table = () => {
                   <tr>
                     <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Customer Name</th>
                     <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Phone</th>
+                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">InvoiceId</th>
                     <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Invoice Date</th>
                     <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Amount</th>
                     <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
@@ -82,6 +89,9 @@ const Table = () => {
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
                         <div className="text-sm text-gray-500">{order.customer.phone}</div>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <div className="text-sm text-gray-500">{order.id}</div>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
                         <div className="text-xs text-gray-500 font-semibold">
@@ -139,11 +149,19 @@ const Table = () => {
         </div>
       </div>
       <dialog id="my_modal_3" className="modal">
-        <form method="dialog" className="modal-box">
-          <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
-            ✕
-          </button>
-          {selectedInvoice && <TransactionHistoryReceipt invoice={selectedInvoice} />}
+        <form method="dialog" className="modal-box  w-auto">
+        <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+          {selectedInvoice && (
+            
+            <div>
+              <div className="modal-top mb-2 -mt-5">
+                <button className="btn btn-sm btn-info" onClick={handlePrint}>Print Receipt</button>
+              </div>
+              <div className="receipt-content" ref={componentRef}  >
+              <TransactionHistoryReceipt invoice={selectedInvoice} />
+              </div>
+            </div>
+          )}
         </form>
       </dialog>
     </>
@@ -155,7 +173,7 @@ const Table = () => {
 export default Table;
 
 
-export const StatData = ({ totalBalance }) => {
+export const StatData = ({ totalBalance, orders }) => {
   return (
     <div>
       <div className="stats shadow min-w-full my-3">
@@ -175,8 +193,8 @@ export const StatData = ({ totalBalance }) => {
               ></path>
             </svg>
           </div>
-          <div className="stat-title">Total Dues</div>
-          <div className="stat-value text-red-600">{totalBalance}</div>
+          <div className="stat-title">Total Sale</div>
+          <div className="stat-value text-green-600">{totalBalance}</div>
           <div className="stat-desc">21% more than last month</div>
         </div>
 
@@ -196,8 +214,8 @@ export const StatData = ({ totalBalance }) => {
               ></path>
             </svg>
           </div>
-          <div className="stat-title">Total Customer</div>
-          <div className="stat-value text-secondary">ee</div>
+          <div className="stat-title">Total Order</div>
+          <div className="stat-value text-secondary">{orders.length}</div>
           <div className="stat-desc">26% more than last month</div>
         </div>
 
