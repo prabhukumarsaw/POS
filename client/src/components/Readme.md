@@ -1,5 +1,8 @@
 ## Invoice Receipt code 
 
+
+```
+
 import React, { useContext, useEffect, useState } from "react";
 import { CartContext } from "../context/CartContext";
 
@@ -95,4 +98,8 @@ const InvoiceReceipt = ({order}) => {
 };
 
 export default InvoiceReceipt;
+
+```
+
+
 
